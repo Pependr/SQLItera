@@ -1,0 +1,13 @@
+{
+    "recommendations": [
+        "tamasfe.even-better-toml",
+        "github.vscode-github-actions",
+        "ziyasal.vscode-open-in-github",
+        "ms-python.vscode-pylance",
+        "ms-python.python",
+        "ms-python.debugpy",
+        "ms-python.vscode-python-envs",
+        "charliermarsh.ruff",
+        "qwtel.sqlite-viewer"
+    ]
+}

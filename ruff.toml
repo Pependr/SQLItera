@@ -1,0 +1,52 @@
+line-length = 80
+indent-width = 4
+output-format = "github"
+src = ["src", "tests"]
+target-version = "py314"
+
+[format]
+exclude = [
+    ".git",
+    ".pytest_cache",
+    ".ruff_cache",
+    ".uv_cache",
+    ".venv",
+    "__pycache__",
+    "uv.lock",
+]
+indent-style = "tab"
+quote-style = "double"
+nested-string-quote-style = "preferred"
+skip-magic-trailing-comma = false
+line-ending = "lf"
+docstring-code-format = true
+docstring-code-line-length = 100
+
+
+[lint]
+ruff = { "parenthesize-tuple-in-subscript" = true }
+pylint = { "max-nested-blocks" = 4, "max-args" = 4 }
+pyupgrade = { "keep-runtime-typing" = true }
+flake8-type-checking = { strict = true }
+typing-extensions = false
+typing-modules = ["typing", "types", "collections.abc"]
+
+
+[lint.isort]
+lines-after-imports = 2
+lines-between-types = 1
+section-order = [
+    "future",
+    "testing",
+    "third-party",
+    "standard-library",
+    "typing",
+    "first-party",
+    "local-folder",
+]
+length-sort = true
+
+
+[lint.isort.sections]
+testing = ["pytest"]
+typing = ["typing", "types", "collections.abc"]

@@ -1,0 +1,10 @@
+cache-dir = "./.uv_cache"
+cache-keys = [
+    { git = { commit = true } },
+    { file = "pyproject.toml" },
+    { dir = "src" },
+]
+
+[build-backend]
+module-root = "src"
+source-include = ["tests/**", "README.md"]
