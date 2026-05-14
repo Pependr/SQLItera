@@ -8,6 +8,7 @@
         "ms-python.debugpy",
         "ms-python.vscode-python-envs",
         "charliermarsh.ruff",
-        "qwtel.sqlite-viewer"
+        "qwtel.sqlite-viewer",
+        "LachyFS.kanban-markdown"
     ]
 }
