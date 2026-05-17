@@ -15,10 +15,12 @@
         "**/__pycache__": true,
         "**/.*_cache": true,
         ".coverage": true,
+        ".devtool": true,
     },
     "search.exclude": {
         "**/__pycache__": true,
-        "**/.*_cache": true
+        "**/.*_cache": true,
+        ".devtool": true,
     },
     "explorer.fileNesting.patterns": {
         "*.ts": "${capture}.js",
@@ -38,8 +40,7 @@
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "charliermarsh.ruff"
     },
-    "ruff.configuration": "~/ruff.toml",
-    "ruff.configurationPreference": "filesystemFirst",
+    "ruff.configuration": "ruff.toml",
     "ruff.nativeServer": "on",
     "editor.codeActionsOnSave": {
         "source.fixAll.ruff": "explicit",
