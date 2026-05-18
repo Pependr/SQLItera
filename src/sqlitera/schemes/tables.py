@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 
-from typing import Protocol, Collection
+from typing import Iterable, Protocol
 
 
-class Column(Protocol):
+class Createable(Protocol):
 	@property
 	def create_query(self) -> str: ...
 
@@ -11,9 +11,9 @@ class Column(Protocol):
 @dataclass(slots=True, init=False)
 class Table:
 	name: str
-	columns: tuple[Column, ...]
+	columns: tuple[Createable, ...]
 
-	def __init__(self, name: str, *cols: Column) -> None:
+	def __init__(self, name: str, *cols: Createable) -> None:
 		self.name = name
 		self.columns = cols
 
@@ -21,5 +21,5 @@ class Table:
 	def create_query(self) -> str:
 		return f"CREATE TABLE {self.name} ({", ".join(col.create_query for col in self.columns)})"
 
-	def insert_query(self, inputs: Collection[str]) -> str:
-		return f"INSERT INTO {self.name} ({", ".join(inputs)}) VALUES ({", ".join("?" * len(inputs))})"
+	def insert_query(self, inputs: Iterable[str]) -> str:
+		return f"INSERT INTO {self.name} ({", ".join(inputs)}) VALUES ({", ".join(f":{i}" for i in inputs)})"

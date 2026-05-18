@@ -43,5 +43,5 @@ def test_table_insert_query(test_table: Table) -> None:
 
 	assert (
 		test_table.insert_query(data)
-		== "INSERT INTO test (test1, test2, test3) VALUES (?, ?, ?)"
+		== "INSERT INTO test (test1, test2, test3) VALUES (:test1, :test2, :test3)"
 	)
