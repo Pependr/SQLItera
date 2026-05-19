@@ -1,37 +1,39 @@
 import pytest as pt
-import unittest.mock as um
+import pytest_mock as pm
 
-from typing import cast
+import contextlib as cl
 
+import sqlitera.protocols as pts
 import sqlitera.operations as ops
 
 
 @pt.fixture
-def cur() -> um.Mock:
-	close = um.Mock()
-	close.return_value = None
-
-	cur = um.Mock()
-	cur.attach_mock(close, "close")
-
-	return cur
+def cur(mocker: pm.MockerFixture) -> pm.MockType:
+	return mocker.Mock(spec_set=pts.Cursor)
 
 
 @pt.fixture
-def conn(cur: um.Mock) -> um.Mock:
-	cursor = um.Mock()
-	cursor.return_value = cur
-
-	conn = um.Mock()
-	conn.attach_mock(cursor, "cursor")
-
-	return conn
+def conn(mocker: pm.MockerFixture) -> pm.MockType:
+	return mocker.Mock(spec_set=pts.Connection)
 
 
-@pt.mark.skip
-def test_cursor(conn: um.Mock) -> None:
-	with ops.cursor(conn) as cur:
-		cur = cast(um.Mock, cur)
+def test_cursor(conn: pm.MockType, cur: pm.MockType) -> None:
+	conn.cursor.return_value = cur
 
-	cur.assert_called_once()
-	conn.assert_called_once()
+	with ops.cursor(conn):
+		...
+
+	conn.cursor.assert_called_once()
+	cur.close.assert_called_once()
+
+	conn.reset_mock()
+	cur.reset_mock()
+
+	class OopsieDaisy(RuntimeError): ...
+
+	with cl.suppress(OopsieDaisy):
+		with ops.cursor(conn):
+			raise OopsieDaisy
+
+	conn.cursor.assert_called_once()
+	cur.close.assert_called_once()

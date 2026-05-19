@@ -48,5 +48,5 @@ length-sort = true
 
 
 [lint.isort.sections]
-testing = ["pytest", "unittest"]
+testing = ["pytest", "pytest_mock", "unittest"]
 typing = ["typing", "types", "collections.abc"]

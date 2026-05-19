@@ -20,11 +20,23 @@ jobs:
             - name: "Install dependencies"
               run: uv sync --dev
 
-            - name: "Run Ruff checks"
+            - name: "Run Ruff checker"
               run: uv run ruff check --show-fixes
 
-            - name: "Run Ruff formatting"
+            - name: "Run Ruff linter"
               run: uv run ruff format --check
 
-            - name: "Run Pytest tests"
-              run: uv run pytest
+            - name: "Run Pytest and collect coverage"
+              run: uv run pytest --cov --cov-report json
+
+            - name: "Prettify json report"
+              run: |
+                touch report.json
+                python -m json.tool coverage.json | report.json
+
+            - name: "Upload report artifact"
+              uses: actions/upload-artifact@v7
+              with:
+                name: "Coverage report"
+                path: "./report.json"
+                archive: false
