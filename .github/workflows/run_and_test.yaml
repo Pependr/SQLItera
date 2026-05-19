@@ -30,7 +30,7 @@ jobs:
               run: uv run pytest --cov --cov-report json
 
             - name: "Prettify json report"
-              run: python -m json.tool coverage.json report.json
+              run: uv run -m json.tool coverage.json report.json
 
             - name: "Upload report artifact"
               uses: actions/upload-artifact@v7
